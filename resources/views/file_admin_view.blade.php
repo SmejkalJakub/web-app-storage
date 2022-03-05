@@ -2,13 +2,14 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Home</title>
+        <title>File Admin</title>
 
     </head>
     <body>
         <div>
-            HOME
+            FILE ADMIN
         </div>
+
         <div class="row">
             <div class="col">
                 @if(Session::has('message'))
@@ -27,23 +28,27 @@
             </div>
         </div>
 
-        <form action="{{ route('upload.file') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="row">
+        <div>
+            {{$file->original_name}}
+        </div>
+        <div>
+            Staženo: {{$file->number_of_downloads}}x
+        </div>
+        <div>
+            Datum smazání: {{$file->delete_date}}
+        </div>
+        <div>
+            Odkaz pro sdílení: {{URL::to('/')}}/{{$file->file_link}}
+        </div>
+        <div>
+            Odkaz pro vás(úpravy a mazání): {{URL::to('/')}}/{{$file->file_link}}/{{$file->admin_link}}
+        </div>
 
-                <div class="col-md-6">
-                    <input type="file" name="file" class="form-control">
-                </div>
+        <a href="{{ route('file.download', $file->file_link) }}"
+            class="btn btn-sm btn-primary">Download</a>
 
-                <div class="col-md-6">
-                    <input type="date" value={{(now()->addDays(30))->toDateTimeString()}} name="delete_date" class="form-control">
-                </div>
+        <a href="{{ route('file.delete', $file->file_link) }}"
+            class="btn btn-sm btn-primary">Delete</a>
 
-                <div class="col-md-6">
-                    <button type="submit" class="btn btn-success">Upload</button>
-                </div>
-
-            </div>
-        </form>
     </body>
 </html>

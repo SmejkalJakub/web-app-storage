@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
-Route::post('upload', 'FileUploadController@upload_file')->name('upload.file');
+Route::post('upload', 'FileController@upload_file')->name('upload.file');
+Route::get('/download/{file_link}', 'FileDownloadController@download')->name('file.download');
+Route::get('/delete/{file_link}', 'FileController@delete_file')->name('file.delete');
+
+
+Route::get('/{file_link}', 'FileViewController@view_file')->name('file.view');
+Route::get('/{file_id}/{admin_id}', 'FileViewController@view_file_admin')->name('file.view.admin');
+
