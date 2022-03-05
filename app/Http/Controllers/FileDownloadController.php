@@ -14,7 +14,8 @@ class FileDownloadController extends Controller
 
         $path = storage_path().'/'.'files/'.$file->file_storage_path;
         if (file_exists($path)) {
-            error_log($path);
+            $file->number_of_downloads = $file->number_of_downloads + 1;
+            $file->save();
             return Response::download($path, $file->original_name);
         }
     }
