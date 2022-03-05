@@ -28,7 +28,7 @@
         </div>
 
         <form action="{{ route('upload.file') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+            {{ csrf_field() }}
             <div class="row">
 
                 <div class="col-md-6">
