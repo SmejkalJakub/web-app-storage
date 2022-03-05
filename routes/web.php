@@ -18,4 +18,4 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::post('upload', 'FileUploadController@upload_file')->name('upload.file.post');
+Route::post('upload', 'FileUploadController@upload_file')->name('upload.file');

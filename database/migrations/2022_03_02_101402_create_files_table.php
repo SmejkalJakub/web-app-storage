@@ -17,7 +17,9 @@ class CreateFilesTable extends Migration
             $table->primary('file_link');
             $table->string('admin_link');
             $table->string('file_storage_path');
-            $table->integer('downloads');
+            $table->string('original_name');
+            $table->string('extension');
+            $table->integer('number_of_downloads');
             $table->date('delete_date');
             $table->timestamps();
         });
