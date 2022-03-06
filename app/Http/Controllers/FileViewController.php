@@ -24,8 +24,6 @@ class FileViewController extends Controller
                 ->where('admin_link', '=', $admin_link)
                 ->first();
 
-        error_log($file->file_link);
-
         return view('file_admin_view', compact('file'));
     }
 }

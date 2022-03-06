@@ -54,7 +54,8 @@ class FileController extends Controller
         $date_now = new DateTime();
         foreach ($files as $file)
         {
-            if($date_now > $file->delete_date)
+            $delete_date = new DateTime($file->delete_date);
+            if($date_now > $delete_date)
             {
                 $this->delete_file_from_server($file->file_link, $file->file_storage_path);
             }

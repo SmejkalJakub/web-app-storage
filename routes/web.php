@@ -18,6 +18,11 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::post('/edit/save', 'FileEditController@save_edit')->name('file.edit.save');
+
+Route::get('/edit/generate/link/{file_id}/{admin_id}', 'FileEditController@new_link')->name('file.new.link');
+Route::get('/edit/generate/admin/{file_id}/{admin_id}', 'FileEditController@new_admin_link')->name('file.new.admin.link');
+
 Route::post('upload', 'FileController@upload_file')->name('upload.file');
 Route::get('/download/{file_link}', 'FileDownloadController@download')->name('file.download');
 Route::get('/delete/{file_link}', 'FileController@delete_file')->name('file.delete');
