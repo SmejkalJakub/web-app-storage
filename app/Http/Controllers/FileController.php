@@ -41,13 +41,32 @@ class FileController extends Controller
     public function delete_file($file_link)
     {
         $file = File::where('file_link', '=', $file_link)->first();
-        if(File::exists(storage_path('files/'.$file->file_storage_path)) )
-        {
-            unlink(storage_path('files/'.$file->file_storage_path));
-        }
-        File::where('file_link', '=', $file_link)->delete();
+        $this->delete_file_from_server($file_link, $file->file_storage_path);
 
         Session::flash('message', 'File succesfuly deleted');
         return redirect()->route('home');
+    }
+
+    public function delete_expired_files()
+    {
+        $files = File::all();
+
+        $date_now = new DateTime();
+        foreach ($files as $file)
+        {
+            if($date_now > $file->delete_date)
+            {
+                $this->delete_file_from_server($file->file_link, $file->file_storage_path);
+            }
+        }
+    }
+
+    private function delete_file_from_server($file_link, $file_path)
+    {
+        if(File::exists(storage_path('files/'.$file_path)) )
+        {
+            unlink(storage_path('files/'.$file_path));
+        }
+        File::where('file_link', '=', $file_link)->delete();
     }
 }
