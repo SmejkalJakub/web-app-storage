@@ -8,12 +8,15 @@ use Illuminate\Support\Str;
 use DateTime;
 use Storage;
 use Session;
+use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
+use Pion\Laravel\ChunkUpload\Handler\AbstractHandler;
+use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 
 class FileController extends Controller
 {
-    public function upload_file(Request $request)
+    /*public function upload_file(Request $request)
     {
-        $request->validate([
+        /*$request->validate([
             'file' => 'required',
         ]);
 
@@ -36,6 +39,48 @@ class FileController extends Controller
 
         Session::flash('message', 'File succesfuly uploaded');
         return redirect()->route('file.view.admin', [$file->file_link, $file->admin_link]);
+    }*/
+
+    public function upload_file(FileReceiver $receiver)
+    {
+        // check if the upload is success, throw exception or return response you need
+        if ($receiver->isUploaded() === false) {
+            throw new UploadMissingFileException();
+        }
+        // receive the file
+        $save = $receiver->receive();
+
+        // check if the upload has finished (in chunk mode it will send smaller files)
+        if ($save->isFinished()) {
+            $randomNameString = Str::random(30);
+            $randomAdminString = Str::random(15);
+
+            $wholeFile = $save->getFile();
+            $fileName = $randomNameString.'.'.$wholeFile->extension();
+
+            $file = new File();
+            $file->file_link = $randomNameString;
+            $file->admin_link = $randomAdminString;
+            $file->file_storage_path = $fileName;
+            $file->original_name = $wholeFile->getClientOriginalName();
+            $file->extension = $wholeFile->extension();
+            $file->number_of_downloads = 0;
+            $file->delete_date = new DateTime((now()->addDays(30))->toDateTimeString());
+            $wholeFile->move(storage_path('files'), $fileName);
+            $file->save();
+
+            return response()->json([
+                "file_link" => $randomNameString,
+                "admin_link" => $randomAdminString
+            ]);
+        }
+
+        // we are in chunk mode, lets send the current progress
+        /** @var AbstractHandler $handler */
+        $handler = $save->handler();
+        return response()->json([
+            "done" => $handler->getPercentageDone()
+        ]);
     }
 
     public function delete_file($file_link)
