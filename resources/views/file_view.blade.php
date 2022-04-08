@@ -2,8 +2,67 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>File</title>
+        <title>Zásilka</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+
+        <style>
+            * {
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            .card {
+                max-width: 700px;
+                margin: 60px auto;
+            }
+            .card-body {
+                align-items: left;
+            }
+            .zasilkarna {
+                font-size: 25px;
+                margin: auto;
+            }
+            .row {
+                margin: auto;
+            }
+
+            .filename {
+                margin: 0.6em auto;
+                height: 32px;
+                line-height: 32px;
+            }
+            .bi-file-earmark-richtext {
+                font-size: 20px;
+            }
+
+
+            i.bi-download:hover { /*nechat tady */
+                color: white;
+            }
+            a.btn-link {
+                padding: 0;
+            }
+            .btn-download {
+                color: white;
+                font-size: 20px;
+                padding: 0;
+            }
+            .icons {
+                margin-left: 20px;
+            }
+
+            .downloads {
+                display: inline-block;
+                font-size: 14px;
+                border: 1px solid rgba(0,0,0,.125);
+                background: rgba(0,0,0,.03);
+                margin: auto;
+                padding: 4px 6px;
+                margin-left: 0;
+                margin-top: 8px;
+                border-radius: 3px;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -29,19 +88,26 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h1>File</h1>
+                            <h1 class="zasilkarna">Zásilkárna</h1>
                         </div>
                         <div class="card-body">
-                            <div class="row">
-                                {{$file->original_name}}
+                            <h5>Vaše zásilka</h5>
+                            <div class="row filename">
+                                <span class="file">
+                                    <i class="bi bi-file-earmark-richtext"></i>
+                                    {{$file->original_name}}
+                                </span>
+                                <span class="icons">
+                                    <button class="btn btn-sm btn-info">
+                                        <a href="{{ route('file.download', $file->file_link) }}"
+                                            class="btn btn-sm btn-link btn-download">
+                                            <i class="bi bi-download" data-toggle="tooltip" title="Stáhnout"></i>
+                                        </a>
+                                    </button>
+                                </span>
                             </div>
-                            <div class="row">
-                                Staženo: {{$file->number_of_downloads}}x
-                            </div>
-
-                            <div class="row">
-                                <a href="{{ route('file.download', $file->file_link) }}"
-                                    class="btn btn-sm btn-primary">Stáhnout</a>
+                            <div class="row downloads">
+                                <span class="text-downloads">Staženo: {{$file->number_of_downloads}}x</span>
                             </div>
                         </div>
                     </div>

@@ -2,8 +2,33 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Home</title>
+        <title>Zásilkárna</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+        <style>
+            * {
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            .card {
+                max-width: 700px;
+                margin: 60px auto;
+            }
+            .card-body {
+                align-items: left;
+            }
+            .zasilkarna {
+                font-size: 25px;
+                margin: auto;
+            }
+            .row {
+                margin: auto;
+            }
+
+            #fileName {
+                margin-bottom: 1rem;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -29,18 +54,30 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h1>Home</h1>
+                            <h1 class="zasilkarna">Zásilkárna</h1>
                         </div>
                         <div class="card-body">
-                            <h3 id="fileName">
-                                Žádný soubor...
-                            </h3>
+                            <h5 id="fileName">Sdílejte něco</h5>
 
-                            <button type="button" class="btn btn-success" aria-label="Add file" id="add-btn">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Vybrat Soubor
-                            </button>
+                            <form class="box" method="post" action="" enctype="multipart/form-data">
+                                <div class="box__input">
+                                    <input class="box__file" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple />
+                                    <label for="file"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
+                                    <button class="box__button" type="submit">Upload</button>
+                                </div>
+                                <div class="box__uploading">Uploading…</div>
+                                <div class="box__success">Done!</div>
+                                <div class="box__error">Error! <span></span>.</div>
+                            </form>
 
-                            <button type="button" class="btn btn-primary" aria-label="Add file" id="send-btn">
+
+
+
+                            <!-- <button type="button" class="btn btn-success" aria-label="Add file" id="add-btn">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Vybrat soubor
+                            </button> -->
+
+                            <button type="button" class="btn btn-info" aria-label="Add file" id="send-btn">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Odeslat
                             </button>
 

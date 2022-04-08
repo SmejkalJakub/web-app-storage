@@ -2,8 +2,134 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>File Admin</title>
+        <title>Zásilka</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+
+        <style>
+            * {
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            .card {
+                max-width: 700px;
+                margin: 60px auto;
+            }
+            .card-body {
+                align-items: left;
+            }
+            .zasilkarna {
+                font-size: 25px;
+                margin: auto;
+            }
+            .row {
+                margin: auto;
+            }
+
+
+
+            .filename {
+                margin: 0.6em auto;
+                height: 32px;
+                line-height: 32px;
+            }
+            .bi-file-earmark-richtext {
+                font-size: 20px;
+            }
+
+            
+            .downloads {
+                display: inline-block;
+                font-size: 14px;
+                border: 1px solid rgba(0,0,0,.125);
+                background: rgba(0,0,0,.03);
+                margin: auto;
+                padding: 4px 6px;
+                margin-left: 0;
+                border-radius: 3px;
+            }
+            .form-group {
+                margin-bottom: 0;
+            }
+
+
+            a.btn-link {
+                padding: 0;
+            }
+            .btn-download {
+                color: black;
+            }
+            .btn-trash {
+                color: red;
+            }
+            .bi-download, .bi-trash {
+                font-size: 20px;
+                padding: 0;
+            }
+            .icons {
+                margin-left: 20px;
+            }
+
+            #delete_date {
+                border: 1px solid rgba(0,0,0,.125);
+                background: rgba(0,0,0,.03);
+                border-radius: 3px;
+                font-size: 0.875rem;
+                padding: 2px 4px;
+                margin-bottom: 0.3rem;
+            }
+            .url {
+                max-width: 100%
+                display: inline-block;
+                border: 1px solid rgba(0,0,0,.125);
+                background: rgba(0,0,0,.03);
+                border-radius: 3px;
+                font-size: 0.875rem;
+                padding: 4px 8px;
+                margin-bottom: 5px;
+            }
+            .link-header {
+                margin: 5px auto;
+            }
+            .file-link {
+                overflow: hidden;
+            }
+            i.bi-clipboard, i.bi-check2 {
+                margin-left: auto 0.3rem;
+                float: right;
+            }
+            #clipboard-icon:hover {
+                color: #0056b3;
+                cursor: pointer;
+            }
+            
+
+        </style>
+
+        <script>
+            function CopyToClipboard(id)
+            {
+                // copy to clipboard
+                // https://www.arclab.com/en/kb/htmlcss/how-to-copy-text-from-html-element-to-clipboard.html
+                let r = document.createRange();
+                r.selectNode(document.getElementById(id));
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(r);
+                document.execCommand('copy');
+                window.getSelection().removeAllRanges();
+
+                // change icon
+                var element = document.getElementById(id + "-icon");
+                element.classList.remove("bi-clipboard");
+                element.classList.add("bi-check2");
+                
+                setTimeout(function() {
+                    element.classList.remove("bi-check2");
+                    element.classList.add("bi-clipboard");
+                }, 1500);
+            }
+        </script>
+
 
     </head>
     <body>
@@ -11,9 +137,11 @@
             <div class="row">
                 <div class="col">
                     @if(Session::has('message'))
-                        <div class="alert alert-success alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                        <div class="alert alert-success alert-dismissible" role="alert">
                             {{ Session('message') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                     @endif
 
@@ -30,47 +158,68 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h1>File Admin</h1>
+                            <h1 class="zasilkarna">Zásilkárna</h1>
                         </div>
                         <div class="card-body">
-                            <div class="row">
-                                {{$file->original_name}}
+                            <h5>Zásilka úspěšně odeslána!</h5>
+                            <div class="row filename">
+                                <span class="file">
+                                    <i class="bi bi-file-earmark-richtext"></i>
+                                    {{$file->original_name}}
+                                </span>
+                                <span class="icons">
+                                    <a href="{{ route('file.download', $file->file_link) }}"
+                                        class="btn btn-sm btn-link btn-download">
+                                        <i class="bi bi-download" data-toggle="tooltip" title="Stáhnout"></i>
+                                    </a>
+                                    <a href="{{ route('file.delete', $file->file_link) }}"
+                                        class="btn btn-sm btn-link btn-trash" data-toggle="tooltip" title="Odstranit">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </span>
                             </div>
-                            <div class="row">
-                                Staženo: {{$file->number_of_downloads}}x
+                            <div class="row downloads">
+                                <span class="text-downloads">Staženo: {{$file->number_of_downloads}}x</span>
                             </div>
+                            <hr>
                             <form action="{{ route('file.edit.save') }}" method="POST">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="file_link" value={{$file->file_link}}>
                                 <input type="hidden" name="admin_link" value={{$file->admin_link}}>
                                 <div class="row">
-                                    <div class="p-3">
-                                        <div class="form-group">
-                                            <label for="delete_date">Datum smazání:</label>
-                                            <input type="date" id="delete_date" name="delete_date" value="{{$file->delete_date}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-success">Uložit</button>
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="delete_date">Uloženo do:</label>
+                                        <input type="date" id="delete_date" name="delete_date" value="{{$file->delete_date}}">
+                                        <button type="submit" class="btn btn-sm btn-info">Uložit</button>
                                     </div>
                                 </div>
                             </form>
-                            <div class="row">
-                                Odkaz pro sdílení: {{URL::to('/')}}/{{$file->file_link}}
-                                <a href="{{ route('file.new.link', [$file->file_link, $file->admin_link]) }}"
-                                    class="btn btn-sm btn-primary">Nový link</a>
+                            <hr>
+                            <div>
+                                <div class="link-header">
+                                    Odkaz pro sdílení: 
+                                </div>
+                                <div class="url">
+                                    <span id="file-link">{{URL::to('/')}}/{{$file->file_link}}</span>
+                                    <i id="file-link-icon" class="bi bi-clipboard" onclick="CopyToClipboard('file-link')"></i>
+                                </div>
+                                <div class="new-link">
+                                    <a href="{{ route('file.new.link', [$file->file_link, $file->admin_link]) }}"
+                                        class="btn btn-sm btn-info new-link-button">Nový odkaz</a>
+                                </div>
                             </div>
-                            <div class="row">
-                                Odkaz pro vás(úpravy a mazání): {{URL::to('/')}}/{{$file->file_link}}/{{$file->admin_link}}
-                                <a href="{{ route('file.new.admin.link', [$file->file_link, $file->admin_link]) }}"
-                                    class="btn btn-sm btn-primary">Nový admin link</a>
-                            </div>
-
-                            <div class="row">
-                                <a href="{{ route('file.download', $file->file_link) }}"
-                                    class="btn btn-sm btn-primary">Stáhnout</a>
-                                <a href="{{ route('file.delete', $file->file_link) }}"
-                                class="btn btn-sm btn-danger">Smazat</a>
+                            <div>
+                                <div class="link-header">
+                                    Administrátorský odkaz:
+                                </div>
+                                <div class="url">
+                                <span id="file-admin-link">{{URL::to('/')}}/{{$file->file_link}}/{{$file->admin_link}}</span>
+                                    <i id="file-admin-link-icon" class="bi bi-clipboard" onclick="CopyToClipboard('file-admin-link')"></i>
+                                </div>
+                                <div class="new-link">
+                                    <a href="{{ route('file.new.admin.link', [$file->file_link, $file->admin_link]) }}"
+                                        class="btn btn-sm btn-info new-link-button">Nový admin odkaz</a>
+                                </div>
                             </div>
                         </div>
                     </div>
