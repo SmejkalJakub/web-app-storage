@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>Zásilkárna</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
         <style>
             * {
@@ -24,11 +24,61 @@
             .row {
                 margin: auto;
             }
-
-            #fileName {
-                margin-bottom: 1rem;
+            #send-btn {
+                display: none;
             }
+            .send-btn-area {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            #drop-area {
+                border: 2px dashed #ccc;
+                border-radius: 20px;
+                width: 480px;
+                font-family: sans-serif;
+                margin: 100px auto;
+                padding: 20px;
+            }
+            #drop-area.highlight {
+                border-color: purple;
+                }
+            p {
+                margin-top: 0;
+            }
+            .my-form {
+                margin-bottom: 10px;
+                }
+            #gallery {
+                margin-top: 10px;
+            }
+            #gallery img {
+                width: 150px;
+                margin-bottom: 10px;
+                margin-right: 10px;
+                vertical-align: middle;
+            }
+            .button {
+                display: inline-block;
+                padding: 10px;
+                background: #ccc;
+                cursor: pointer;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+            }
+            .button:hover {
+                background: #ddd;
+            }
+            #fileElem {
+                display: none;
+            }
+
+
         </style>
+
+        <script>
+
+        </script>
     </head>
     <body>
         <div class="container">
@@ -57,37 +107,28 @@
                             <h1 class="zasilkarna">Zásilkárna</h1>
                         </div>
                         <div class="card-body">
-                            <h5 id="fileName">Sdílejte něco</h5>
+                            <h5 id="fileName">
+                            </h5>
 
-                            <form class="box" method="post" action="" enctype="multipart/form-data">
-                                <div class="box__input">
-                                    <input class="box__file" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple />
-                                    <label for="file"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
-                                    <button class="box__button" type="submit">Upload</button>
+                            <div id="drop-area">
+                                <form class="my-form">
+                                    <p>Přetáhněte soubor do čárkované oblasti nebo vyberte pomocí tlačítka</p>
+                                    <input type="file" id="fileElem" onchange="handleFile(this.files)">
+                                    <button type="button" class="btn btn-info" aria-label="Add file" id="add-btn">
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Vybrat soubor
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="send-btn-area">
+                                <button type="button" class="btn btn-info" aria-label="Add file" id="send-btn">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Odeslat
+                                </button>
+                            </div>
+                            <div class="progress hide" id="upload-progress">
+                                <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="width: 0%">
+                                    <span class="sr-only"></span>
                                 </div>
-                                <div class="box__uploading">Uploading…</div>
-                                <div class="box__success">Done!</div>
-                                <div class="box__error">Error! <span></span>.</div>
-                            </form>
-
-
-
-
-                            <!-- <button type="button" class="btn btn-success" aria-label="Add file" id="add-btn">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Vybrat soubor
-                            </button> -->
-
-                            <button type="button" class="btn btn-info" aria-label="Add file" id="send-btn">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Odeslat
-                            </button>
-
-                            <p>
-                                <div class="progress hide" id="upload-progress">
-                                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="width: 0%">
-                                        <span class="sr-only"></span>
-                                    </div>
-                                </div>
-                            </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -95,14 +136,61 @@
         </div>
 
         <script type="text/javascript" src="{{URL::asset('js/resumable.js')}}"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
         <script>
+            let browseFile = $('#add-btn');
+
+            let dropArea = document.getElementById('drop-area')
+
+            ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            })
+
+            function preventDefaults (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ;['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            })
+
+            ;['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            })
+
+            function highlight(e) {
+                dropArea.classList.add('highlight');
+            }
+
+            function unhighlight(e) {
+                dropArea.classList.remove('highlight');
+            }
+
+            dropArea.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                let dt = e.dataTransfer;
+                let files = dt.files;
+
+                handleFile(files);
+            }
+
+            function handleFile(files) {
+                if (files.length > 1) {
+                    alert('Můžete vložit pouze 1 soubor');
+                }
+                else {
+                    browseFile = files;
+                }
+            }
+
+            
+
             let progress = $('.progress');
 
             progress.hide();
 
-            let browseFile = $('#add-btn');
             let resumable = new Resumable({
                 target: '{{ route('upload.file') }}',
                 query:{_token:'{{ csrf_token() }}'} ,
@@ -120,6 +208,7 @@
 
             resumable.on('fileAdded', function (file) {
                 document.getElementById("fileName").innerHTML = file.file.name;
+                document.getElementById("send-btn").style.display = "block";
             });
 
             $('#send-btn').click(function(){
