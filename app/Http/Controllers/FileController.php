@@ -43,6 +43,7 @@ class FileController extends Controller
 
     public function upload_file(FileReceiver $receiver)
     {
+        error_log('Some message here.');
         // check if the upload is success, throw exception or return response you need
         if ($receiver->isUploaded() === false) {
             throw new UploadMissingFileException();

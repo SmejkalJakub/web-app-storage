@@ -3,133 +3,11 @@
     <head>
         <meta charset="utf-8">
         <title>Zásilka</title>
+        <link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
-
-        <style>
-            * {
-                font-family: Arial, Helvetica, sans-serif;
-            }
-            .card {
-                max-width: 700px;
-                margin: 60px auto;
-            }
-            .card-body {
-                align-items: left;
-            }
-            .zasilkarna {
-                font-size: 25px;
-                margin: auto;
-            }
-            .row {
-                margin: auto;
-            }
-
-
-
-            .filename {
-                margin: 0.6em auto;
-                height: 32px;
-                line-height: 32px;
-            }
-            .bi-file-earmark-richtext {
-                font-size: 20px;
-            }
-
-            
-            .downloads {
-                display: inline-block;
-                font-size: 14px;
-                border: 1px solid rgba(0,0,0,.125);
-                background: rgba(0,0,0,.03);
-                margin: auto;
-                padding: 4px 6px;
-                margin-left: 0;
-                border-radius: 3px;
-            }
-            .form-group {
-                margin-bottom: 0;
-            }
-
-
-            a.btn-link {
-                padding: 0;
-            }
-            .btn-download {
-                color: black;
-            }
-            .btn-trash {
-                color: red;
-            }
-            .bi-download, .bi-trash {
-                font-size: 20px;
-                padding: 0;
-            }
-            .icons {
-                margin-left: 20px;
-            }
-
-            #delete_date {
-                border: 1px solid rgba(0,0,0,.125);
-                background: rgba(0,0,0,.03);
-                border-radius: 3px;
-                font-size: 0.875rem;
-                padding: 2px 4px;
-                margin-bottom: 0.3rem;
-            }
-            .url {
-                max-width: 100%
-                display: inline-block;
-                border: 1px solid rgba(0,0,0,.125);
-                background: rgba(0,0,0,.03);
-                border-radius: 3px;
-                font-size: 0.875rem;
-                padding: 4px 8px;
-                margin-bottom: 5px;
-            }
-            .link-header {
-                margin: 5px auto;
-            }
-            .file-link {
-                overflow: hidden;
-            }
-            i.bi-clipboard, i.bi-check2 {
-                margin-left: auto 0.3rem;
-                float: right;
-            }
-            #clipboard-icon:hover {
-                color: #0056b3;
-                cursor: pointer;
-            }
-            
-
-        </style>
-
-        <script>
-            function CopyToClipboard(id)
-            {
-                // copy to clipboard
-                // https://www.arclab.com/en/kb/htmlcss/how-to-copy-text-from-html-element-to-clipboard.html
-                let r = document.createRange();
-                r.selectNode(document.getElementById(id));
-                window.getSelection().removeAllRanges();
-                window.getSelection().addRange(r);
-                document.execCommand('copy');
-                window.getSelection().removeAllRanges();
-
-                // change icon
-                var element = document.getElementById(id + "-icon");
-                element.classList.remove("bi-clipboard");
-                element.classList.add("bi-check2");
-                
-                setTimeout(function() {
-                    element.classList.remove("bi-check2");
-                    element.classList.add("bi-clipboard");
-                }, 1500);
-            }
-        </script>
-
+        <script type="text/javascript" src="{{URL::asset('js/copyToClipboard.js')}}"></script>
 
     </head>
     <body>
@@ -197,7 +75,7 @@
                             <hr>
                             <div>
                                 <div class="link-header">
-                                    Odkaz pro sdílení: 
+                                    Odkaz pro sdílení:
                                 </div>
                                 <div class="url">
                                     <span id="file-link">{{URL::to('/')}}/{{$file->file_link}}</span>

@@ -1,0 +1,141 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+.card {
+    max-width: 700px;
+    margin: 60px auto;
+}
+.card-body {
+    align-items: left;
+}
+.zasilkarna {
+    font-size: 25px;
+    margin: auto;
+}
+.row {
+    margin: auto;
+}
+#send-btn {
+    display: none;
+}
+.send-btn-area {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 20px;
+    width: 480px;
+    font-family: sans-serif;
+    margin: 100px auto;
+    padding: 20px;
+}
+#drop-area.highlight {
+    border-color: purple;
+    }
+p {
+    margin-top: 0;
+}
+.my-form {
+    margin-bottom: 10px;
+    }
+#gallery {
+    margin-top: 10px;
+}
+#gallery img {
+    width: 150px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.button {
+    display: inline-block;
+    padding: 10px;
+    background: #ccc;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.button:hover {
+    background: #ddd;
+}
+#fileElem {
+    display: none;
+}
+.filename {
+    margin: 0.6em auto;
+    height: 32px;
+    line-height: 32px;
+}
+.bi-file-earmark-richtext {
+    font-size: 20px;
+}
+i.bi-download:hover { /*nechat tady */
+    color: white;
+}
+a.btn-link {
+    padding: 0;
+}
+.btn-download {
+    color: white;
+    font-size: 20px;
+    padding: 0;
+}
+.icons {
+    margin-left: 20px;
+}
+.downloads {
+    display: inline-block;
+    font-size: 14px;
+    border: 1px solid rgba(0,0,0,.125);
+    background: rgba(0,0,0,.03);
+    margin: auto;
+    padding: 4px 6px;
+    margin-left: 0;
+    margin-top: 8px;
+    border-radius: 3px;
+}
+.form-group {
+    margin-bottom: 0;
+}
+.bi-download, .bi-trash {
+    font-size: 20px;
+    padding: 0;
+}
+.icons {
+    margin-left: 20px;
+}
+#delete_date {
+    border: 1px solid rgba(0,0,0,.125);
+    background: rgba(0,0,0,.03);
+    border-radius: 3px;
+    font-size: 0.875rem;
+    padding: 2px 4px;
+    margin-bottom: 0.3rem;
+}
+.url
+{
+    max-width: 100%;
+    display: inline-block;
+    border: 1px solid rgba(0,0,0,.125);
+    background: rgba(0,0,0,.03);
+    border-radius: 3px;
+    font-size: 0.875rem;
+    padding: 4px 8px;
+    margin-bottom: 5px;
+}
+.link-header {
+    margin: 5px auto;
+}
+.file-link {
+    overflow: hidden;
+}
+i.bi-clipboard, i.bi-check2 {
+    margin-left: auto 0.3rem;
+    float: right;
+}
+#clipboard-icon:hover {
+    color: #0056b3;
+    cursor: pointer;
+}
