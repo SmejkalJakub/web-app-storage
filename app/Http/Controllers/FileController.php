@@ -14,6 +14,7 @@ use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 
 class FileController extends Controller
 {
+    // Original function taking care of uploading files with the reduced upload file size
     /*public function upload_file(Request $request)
     {
         /*$request->validate([
@@ -41,24 +42,26 @@ class FileController extends Controller
         return redirect()->route('file.view.admin', [$file->file_link, $file->admin_link]);
     }*/
 
+    // Function that takes care of uploading. Using the Laravel chunk upload package;
     public function upload_file(FileReceiver $receiver)
     {
-        error_log('Some message here.');
-        // check if the upload is success, throw exception or return response you need
+        // Check for successful upload
         if ($receiver->isUploaded() === false) {
             throw new UploadMissingFileException();
         }
-        // receive the file
+        // Receive the file
         $save = $receiver->receive();
 
-        // check if the upload has finished (in chunk mode it will send smaller files)
+        // If upload finished, save the file and add a record to the database
         if ($save->isFinished()) {
             $randomNameString = Str::random(30);
             $randomAdminString = Str::random(15);
 
+            // Save the file to the server storage
             $wholeFile = $save->getFile();
             $fileName = $randomNameString.'.'.$wholeFile->extension();
 
+            // Create the database record
             $file = new File();
             $file->file_link = $randomNameString;
             $file->admin_link = $randomAdminString;
@@ -70,19 +73,21 @@ class FileController extends Controller
             $wholeFile->move(storage_path('files'), $fileName);
             $file->save();
 
+            // Redirect to the admin page
             return response()->json([
                 "file_link" => $randomNameString,
                 "admin_link" => $randomAdminString
             ]);
         }
 
-
+        // Send back the proggress of upload to show the user
         $handler = $save->handler();
         return response()->json([
             "done" => $handler->getPercentageDone()
         ]);
     }
 
+    // Delete file from the database and server
     public function delete_file($file_link)
     {
         $file = File::where('file_link', '=', $file_link)->first();
@@ -92,6 +97,7 @@ class FileController extends Controller
         return redirect()->route('home');
     }
 
+    // Scheduled function that goes through all the files and checks if they are expired. If yes, they will be deleted
     public function delete_expired_files()
     {
         $files = File::all();
@@ -107,6 +113,7 @@ class FileController extends Controller
         }
     }
 
+    // Delete file from the server
     private function delete_file_from_server($file_link, $file_path)
     {
         if(File::exists(storage_path('files/'.$file_path)) )

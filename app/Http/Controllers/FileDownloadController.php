@@ -9,6 +9,7 @@ use Response;
 
 class FileDownloadController extends Controller
 {
+    // Takes care of downloading the file from storage with original name and extension
     public function download($file_link) {
         $file = File::where('file_link', '=', $file_link)->first();
 

@@ -11,6 +11,7 @@ use Session;
 
 class FileEditController extends Controller
 {
+    // Saves all
     public function save_edit(Request $request)
     {
         $request->validate([
@@ -26,6 +27,7 @@ class FileEditController extends Controller
         return redirect()->route('file.view.admin', [$request->file_link, $request->admin_link]);
     }
 
+    // Generates the new link for users and redirects to it
     public function new_link($file_link, $admin_link)
     {
         $randomString = Str::random(30);
@@ -41,6 +43,7 @@ class FileEditController extends Controller
         return redirect()->route('file.view.admin', [$file->file_link, $file->admin_link]);
     }
 
+    // Generates new admin link and redirects to it
     public function new_admin_link($file_link, $admin_link)
     {
         $file = File::where('file_link', '=', $file_link)->first();
