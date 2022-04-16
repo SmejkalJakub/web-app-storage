@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Zásilkárna</title>
-        <link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}" />
+        <link href="/css/style.css" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
