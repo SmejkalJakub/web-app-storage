@@ -13,6 +13,7 @@ class CreateFilesTable extends Migration
      */
     public function up()
     {
+        // Defines the schema of the database table
         Schema::create('files', function (Blueprint $table) {
             $table->string('file_link')->primary();
             $table->string('admin_link');

@@ -66,12 +66,20 @@
         <script type="text/javascript" src="{{URL::asset('js/resumable.js')}}"></script>
 
         <script>
+            // File browse button
             let browseFile = $('#addFileButton');
+
+            // Progress bar
             let progress = $('.progress');
+
+            // Last file that was added, is used to pop it out of the array of added files
             let lastAddedFile = undefined;
 
+            // We will hide the progress bar at the begining
             progress.hide();
 
+            // Instance of the resumable js library. Some crucial settings are defined here.
+            // Most notable is the 'target' that selects what Controller function should be called
             let resumable = new Resumable({
                 target: '{{ route('upload.file') }}',
                 query:{_token:'{{ csrf_token() }}'} ,
@@ -85,25 +93,32 @@
                 throttleProgressCallbacks: 1,
             });
 
-
+            // This function will bind the resumable instance to the 'browse file' button. Any action on that button will be then registered
             resumable.assignBrowse(browseFile[0]);
 
+            // Function that is called when a file is added to the resumable instance. Either by browse file button or by the drag and drop system
             resumable.on('fileAdded', function (file) {
+
+                // If any file was selected before, we will delete it
                 if(lastAddedFile !== undefined)
                 {
                     resumable.files.shift();
                 }
-                console.log(resumable.files);
 
+                // Register current selected file as last added
                 lastAddedFile = browseFile[0];
+
+                // Show the data to the user and enable the send button
                 document.getElementById("fileName").innerHTML = file.file.name;
                 document.getElementById("sendFileButton").style.display = "block";
             });
 
+            // Click event for the send button to upload the file
             $('#sendFileButton').click(function(){
                 resumable.upload();
             });
 
+            //
             resumable.on('fileProgress', function (file) {
                 showProgress();
                 if(navigator.onLine === true){
@@ -111,13 +126,15 @@
                 }
             });
 
-            resumable.on('fileSuccess', function (file, response) { // trigger when file upload complete
+            // Function that runs when the file is succesfully uploaded to the server
+            resumable.on('fileSuccess', function (file, response) {
                 responseJSON = JSON.parse(response);
                 let baseUrl = "/";
                 let finalUrl = baseUrl.concat(responseJSON.file_link, "/", responseJSON.admin_link);;
                 window.location = finalUrl;
             });
 
+            // Simple function that adds css parameters so the progress bar is shown and empty at the beggining of the upload
             function showProgress() {
                 progress.find('.progress-bar').css('width', '0%');
                 progress.find('.progress-bar').html('0%');
@@ -125,17 +142,16 @@
                 progress.show();
             }
 
+            // Fill the progress bar based on the current upload progress
             function updateProgress(value) {
                 progress.find('.progress-bar').css('width', `${value}%`)
                 progress.find('.progress-bar').html(`${value}%`)
             }
 
-            function hideProgress() {
-                progress.hide();
-            }
-
+            // Define the element as a drop area
             let dropArea = document.getElementById('drop-area')
 
+            // Add event listeners for all the needed events
             ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                 dropArea.addEventListener(eventName, preventDefaults, false);
             })
@@ -153,16 +169,19 @@
                 dropArea.addEventListener(eventName, unhighlight, false);
             })
 
+            // Highlight the drop area
             function highlight(e) {
                 dropArea.classList.add('highlight');
             }
 
+            // Remove the highlight of the drop area
             function unhighlight(e) {
                 dropArea.classList.remove('highlight');
             }
 
             dropArea.addEventListener('drop', handleDrop, false);
 
+            // Ïf file is dropped at the drop area
             function handleDrop(e) {
                 let dt = e.dataTransfer;
                 let files = dt.files;
@@ -170,11 +189,12 @@
                 handleFile(files);
             }
 
+            // Function that takes care of adding the dropped file into the resumable
             function handleFile(files) {
-                if (files.length > 1) {
+                if (files.length > 1) {                     // If there are more than one file, we will not allow it
                     alert('Můžete vložit pouze 1 soubor');
                 }
-                else {
+                else {                                      // Otherwise we will add it to the resumable. 'fileAdded' callback for resumable will be executed
                     browseFile = files;
                     resumable.addFile(browseFile[0]);
                 }
