@@ -42,13 +42,13 @@
                                 <form class="my-form">
                                     <p>Přetáhněte soubor do čárkované oblasti nebo vyberte pomocí tlačítka</p>
                                     <input type="file" id="fileElem" onchange="handleFile(this.files)">
-                                    <button type="button" class="btn btn-info" aria-label="Add file" id="add-btn">
+                                    <button type="button" class="btn btn-info" aria-label="Add file" id="addFileButton">
                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Vybrat soubor
                                     </button>
                                 </form>
                             </div>
                             <div class="send-btn-area">
-                                <button type="button" class="btn btn-info" aria-label="Add file" id="send-btn">
+                                <button type="button" class="btn btn-info" aria-label="Add file" id="sendFileButton">
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Odeslat
                                 </button>
                             </div>
@@ -66,7 +66,7 @@
         <script type="text/javascript" src="{{URL::asset('js/resumable.js')}}"></script>
 
         <script>
-            let browseFile = $('#add-btn');
+            let browseFile = $('#addFileButton');
             let progress = $('.progress');
             let lastAddedFile = undefined;
 
@@ -97,21 +97,17 @@
 
                 lastAddedFile = browseFile[0];
                 document.getElementById("fileName").innerHTML = file.file.name;
-                document.getElementById("send-btn").style.display = "block";
+                document.getElementById("sendFileButton").style.display = "block";
             });
 
-            $('#send-btn').click(function(){
+            $('#sendFileButton').click(function(){
                 resumable.upload();
             });
 
             resumable.on('fileProgress', function (file) {
                 showProgress();
                 if(navigator.onLine === true){
-                    // trigger when file progress update
                     updateProgress(Math.floor(file.progress() * 100));
-                }
-                else{
-                    alert('no Internet');
                 }
             });
 
@@ -120,10 +116,6 @@
                 let baseUrl = "/";
                 let finalUrl = baseUrl.concat(responseJSON.file_link, "/", responseJSON.admin_link);;
                 window.location = finalUrl;
-            });
-
-            resumable.on('fileError', function (file, response) { // trigger when there is any error
-                console.log(response);
             });
 
             function showProgress() {
