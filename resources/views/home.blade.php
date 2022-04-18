@@ -151,20 +151,23 @@
             // Define the element as a drop area
             let dropArea = document.getElementById('drop-area')
 
-            // Add event listeners for all the needed events
+
             ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                 dropArea.addEventListener(eventName, preventDefaults, false);
             })
 
+            //
             function preventDefaults (e) {
                 e.preventDefault();
                 e.stopPropagation();
             }
 
+            // Add event listeners for drag enter and dragover
             ;['dragenter', 'dragover'].forEach(eventName => {
                 dropArea.addEventListener(eventName, highlight, false);
             })
 
+            // Add event listeners for drag leave and drop
             ;['dragleave', 'drop'].forEach(eventName => {
                 dropArea.addEventListener(eventName, unhighlight, false);
             })
