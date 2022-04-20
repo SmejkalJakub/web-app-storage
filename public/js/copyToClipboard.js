@@ -1,19 +1,15 @@
 function CopyToClipboard(id)
 {
     // copy to clipboard
-    // https://www.arclab.com/en/kb/htmlcss/how-to-copy-text-from-html-element-to-clipboard.html
-    let r = document.createRange();
-    r.selectNode(document.getElementById(id));
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(r);
-    document.execCommand('copy');
-    window.getSelection().removeAllRanges();
+    // TODO: vzykouset
+    let link = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(link);
 
-    // change icon
+    // change icon (clipboard to check mark)
     var element = document.getElementById(id + "-icon");
     element.classList.remove("bi-clipboard");
     element.classList.add("bi-check2");
-
+    // check mark to clipboard icon after 1.5s
     setTimeout(function() {
         element.classList.remove("bi-check2");
         element.classList.add("bi-clipboard");

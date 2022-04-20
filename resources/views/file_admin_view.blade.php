@@ -4,6 +4,8 @@
         <meta charset="utf-8">
         <title>Zásilka</title>
         <link href="/css/style.css" rel="stylesheet">
+        <link href="/css/file_view.css" rel="stylesheet">
+        <link href="/css/admin_view.css" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 

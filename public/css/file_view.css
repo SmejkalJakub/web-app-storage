@@ -1,0 +1,40 @@
+:root {
+    --icon-download-color: white;
+    --box-background-color: rgba(0,0,0,.03);
+    --box-border-color: rgba(0,0,0,.125);
+    --downloads-font-size: 0.875rem;
+}
+
+/* icons style */
+i.bi-download { 
+    color: var(--icon-download-color);
+    padding: 0;
+}
+.file {
+    display: inline-block;
+}
+.icons {
+    display: inline-block;
+    margin-left: 20px;
+}
+.bi-download, .bi-trash {
+    padding: 0;
+}
+/* downloads box style */
+.row.downloads {
+    max-width: 100px;
+    font-size: var(--downloads-font-size);
+    border: 1px solid var(--box-border-color);
+    background: var(--box-background-color);
+    margin-top: 8px;
+    margin-bottom: 20px;
+    padding: 4px 6px;
+    border-radius: 3px;
+}
+.text-downloads {
+    margin: auto;
+}
+a.btn-link {
+    padding: 0;
+}
+

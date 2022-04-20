@@ -1,0 +1,29 @@
+/* drag and drop inspiration source: 
+Joseph Zimmerman 2018, How To Make A Drag-and-Drop File Uploader With Vanilla JavaScript, 
+Smashing Magazine, accessed 8.4.2022, 
+https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/*/
+#drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 20px;
+    width: 80%;
+    font-family: sans-serif;
+    margin: 100px auto;
+    padding: 20px;
+}
+#drop-area.highlight {
+    border-color: black;
+}
+.drop-area-form {
+    margin-bottom: 10px;
+}
+#fileElem {
+    display: none;
+}
+/* send button style*/
+#send-btn {
+    display: none;
+}
+.send-btn-area {
+    display: flex;
+    justify-content: flex-end;
+}

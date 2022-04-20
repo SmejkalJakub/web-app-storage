@@ -1,0 +1,57 @@
+:root {
+    --links-font-size: 0.875rem;
+    --delete-date-font-size: 0.875rem;
+    --box-background-color: rgba(0,0,0,.03);
+    --box-border-color: rgba(0,0,0,.125);
+    --copy-icon-hover-color: blue;
+    --download-icon-color: black;
+    --trash-icon-color: red;
+}
+
+/* admin icons */
+i.bi-download {
+    color: var(--download-icon-color);
+}
+i.bi-trash {
+    color: var(--trash-icon-color);
+}
+/* delete date form style */
+div.form-group {
+    margin-bottom: 0px;
+}
+#delete_date {
+    border: 1px solid var(--box-border-color);
+    background: var(--box-background-color);
+    border-radius: 3px;
+    font-size: var(--delete-date-font-size);
+    padding: 2px 4px;
+    margin-bottom: 0.3rem;
+}
+/* links */
+.url
+{
+    max-width: 100%;
+    display: inline-block;
+    border: 1px solid var(--box-border-color);
+    background: var(--box-background-color);
+    border-radius: 3px;
+    font-size: var(--links-font-size);
+    padding: 4px 8px;
+    margin-bottom: 5px;
+}
+.link-header {
+    margin: 5px auto;
+}
+.file-link {
+    overflow: hidden;
+}
+/* copy to clipboard style */
+i.bi-clipboard, i.bi-check2 {
+    margin-left: 0.4rem;
+    float: right;
+    font-size: var(--links-font-size);
+}
+i.bi-clipboard:hover {
+    color: var(--copy-icon-hover-color);
+    cursor: pointer;
+}

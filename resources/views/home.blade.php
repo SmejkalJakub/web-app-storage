@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>Zásilkárna</title>
         <link href="/css/style.css" rel="stylesheet">
+        <link href="/css/home.css" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
@@ -38,8 +39,12 @@
                             <h5 id="fileName">
                             </h5>
 
+                            <!-- drag and drop inspiration source: 
+                            Joseph Zimmerman 2018, How To Make A Drag-and-Drop File Uploader With Vanilla JavaScript, 
+                            Smashing Magazine, accessed 8.4.2022, 
+                            https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/ -->
                             <div id="drop-area">
-                                <form class="my-form">
+                                <form class="drop-area-form">
                                     <p>Přetáhněte soubor do čárkované oblasti nebo vyberte pomocí tlačítka</p>
                                     <input type="file" id="fileElem" onchange="handleFile(this.files)">
                                     <button type="button" class="btn btn-info" aria-label="Add file" id="addFileButton">

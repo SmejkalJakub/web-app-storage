@@ -1,11 +1,17 @@
+// drag and drop inspiration source: 
+// Joseph Zimmerman 2018, How To Make A Drag-and-Drop File Uploader With Vanilla JavaScript, 
+// Smashing Magazine, accessed 8.4.2022, 
+// https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
+
 // Define the element as a drop area
 let dropArea = document.getElementById('drop-area')
 
+// Add listeners on drop area events to prevent their default behavior
 ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
     dropArea.addEventListener(eventName, preventDefaults, false);
 })
 
-//
+// Prevent default behavior and stop propagation
 function preventDefaults (e) {
     e.preventDefault();
     e.stopPropagation();
