@@ -4,6 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/*
+    Autorský soubor
+    Autor: Jakub Smejkal, Klára Formánková
+*/
+
 class CreateFilesTable extends Migration
 {
     /**
