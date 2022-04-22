@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*
+    Autorský soubor
+    Autor: Jakub Smejkal, Klára Formánková
+*/
 
 Route::get('/', function () {
     return view('home');

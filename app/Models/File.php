@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/*
+    Autorský soubor
+    Autor: Jakub Smejkal, Klára Formánková
+*/
 
 // Model for the file element. It represents how the representation of an uploaded file should look like
 class File extends Model

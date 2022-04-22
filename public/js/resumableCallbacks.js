@@ -1,3 +1,8 @@
+/*
+    Autorský soubor
+    Autor: Jakub Smejkal, Klára Formánková
+*/
+
 // File browse button
 let browseFile = $('#addFileButton');
 

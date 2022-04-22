@@ -7,6 +7,11 @@ use App\Models\File;
 use Storage;
 use Response;
 
+/*
+    Autorský soubor
+    Autor: Jakub Smejkal, Klára Formánková
+*/
+
 class FileDownloadController extends Controller
 {
     // Takes care of downloading the file from storage with original name and extension

@@ -9,6 +9,11 @@ use DateTime;
 use Storage;
 use Session;
 
+/*
+    Autorský soubor
+    Autor: Jakub Smejkal, Klára Formánková
+*/
+
 class FileEditController extends Controller
 {
     // Saves all

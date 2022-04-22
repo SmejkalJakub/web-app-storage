@@ -1,3 +1,8 @@
+/*
+    Autorský soubor
+    Autor: Jakub Smejkal, Klára Formánková
+*/
+
 :root {
     --icon-download-color: white;
     --box-background-color: rgba(0,0,0,.03);
@@ -6,7 +11,7 @@
 }
 
 /* icons style */
-i.bi-download { 
+i.bi-download {
     color: var(--icon-download-color);
     padding: 0;
 }

@@ -12,6 +12,11 @@ use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
 use Pion\Laravel\ChunkUpload\Handler\AbstractHandler;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 
+/*
+    Autorský soubor
+    Autor: Jakub Smejkal, Klára Formánková
+*/
+
 class FileController extends Controller
 {
     // Original function taking care of uploading files with the reduced upload file size

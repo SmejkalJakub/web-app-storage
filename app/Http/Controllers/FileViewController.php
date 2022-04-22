@@ -8,6 +8,11 @@ use Illuminate\Support\Str;
 use DateTime;
 use DB;
 
+/*
+    Autorský soubor
+    Autor: Jakub Smejkal, Klára Formánková
+*/
+
 class FileViewController extends Controller
 {
     // Redirects to the user view of the file upload
