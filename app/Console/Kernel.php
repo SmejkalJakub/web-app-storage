@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call('App\Http\Controllers\FileController@delete_expired_files')->everyDay();
+        $schedule->call('App\Http\Controllers\FileController@delete_expired_files')->daily();
     }
 
     private function deleteFiles()
