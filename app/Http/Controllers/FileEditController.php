@@ -28,7 +28,7 @@ class FileEditController extends Controller
         $file->delete_date = $request->delete_date;
         $file->save();
 
-        Session::flash('message', 'File succesfuly updated');
+        Session::flash('message', 'Soubor úspěšně upraven');
         return redirect()->route('file.view.admin', [$request->file_link, $request->admin_link]);
     }
 

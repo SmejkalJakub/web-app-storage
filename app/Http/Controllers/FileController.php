@@ -98,7 +98,7 @@ class FileController extends Controller
         $file = File::where('file_link', '=', $file_link)->first();
         $this->delete_file_from_server($file_link, $file->file_storage_path);
 
-        Session::flash('message', 'File succesfuly deleted');
+        Session::flash('message', 'Soubor úspěšně smazán');
         return redirect()->route('home');
     }
 
